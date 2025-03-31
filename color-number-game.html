@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+    }
+    .game-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .color-box {
+      width: 100px;
+      height: 100px;
+      display: inline-block;
+      margin: 10px;
+      border: 3px solid black;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .number {
+      font-size: 24px;
+      margin: 10px;
+      padding: 10px;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-color: #e0e0e0;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .question {
+      font-size: 24px;
+      margin: 20px;
+    }
+    .result {
+      font-size: 24px;
+      height: 30px;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Colors and Numbers</h1>
+    
+    <div id="colors">
+      <div class="color-box" style="background-color: red;" onclick="sayColor('red')"></div>
+      <div class="color-box" style="background-color: blue;" onclick="sayColor('blue')"></div>
+      <div class="color-box" style="background-color: green;" onclick="sayColor('green')"></div>
+      <div class="color-box" style="background-color: yellow;" onclick="sayColor('yellow')"></div>
+      <div class="color-box" style="background-color: black;" onclick="sayColor('black')"></div>
+    </div>
+    
+    <div id="numbers">
+      <div class="number" onclick="sayNumber(1)">1</div>
+      <div class="number" onclick="sayNumber(2)">2</div>
+      <div class="number" onclick="sayNumber(3)">3</div>
+      <div class="number" onclick="sayNumber(4)">4</div>
+      <div class="number" onclick="sayNumber(5)">5</div>
+      <div class="number" onclick="sayNumber(6)">6</div>
+      <div class="number" onclick="sayNumber(7)">7</div>
+      <div class="number" onclick="sayNumber(8)">8</div>
+      <div class="number" onclick="sayNumber(9)">9</div>
+      <div class="number" onclick="sayNumber(10)">10</div>
+    </div>
+    
+    <div class="question" id="question">Click a color or number</div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function sayColor(color) {
+      document.getElementById('question').innerText = "This is " + color;
+      document.getElementById('result').innerText = "Say: This is " + color;
+    }
+    
+    function sayNumber(number) {
+      document.getElementById('question').innerText = "This is " + number;
+      document.getElementById('result').innerText = "Say: This is " + number;
+    }
+  </script>
+</body>
+</html>

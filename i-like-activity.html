@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+    }
+    .activity-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .animal-card {
+      width: 150px;
+      height: 150px;
+      display: inline-block;
+      margin: 10px;
+      border: 3px solid #4a90e2;
+      border-radius: 10px;
+      background-color: #e6f2ff;
+      cursor: pointer;
+      text-align: center;
+      padding: 10px;
+    }
+    .animal-card img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+    .animal-name {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .phrase {
+      font-size: 24px;
+      margin: 20px;
+      min-height: 36px;
+    }
+  </style>
+</head>
+<body>
+  <div class="activity-container">
+    <h1>I Like Animals</h1>
+    
+    <div class="phrase" id="phrase">Click an animal you like!</div>
+    
+    <div class="animals">
+      <div class="animal-card" onclick="showPhrase('dog')">
+        <img src="/api/placeholder/120/120" alt="Dog">
+        <div class="animal-name">Dog</div>
+      </div>
+      <div class="animal-card" onclick="showPhrase('cat')">
+        <img src="/api/placeholder/120/120" alt="Cat">
+        <div class="animal-name">Cat</div>
+      </div>
+      <div class="animal-card" onclick="showPhrase('bird')">
+        <img src="/api/placeholder/120/120" alt="Bird">
+        <div class="animal-name">Bird</div>
+      </div>
+      <div class="animal-card" onclick="showPhrase('fish')">
+        <img src="/api/placeholder/120/120" alt="Fish">
+        <div class="animal-name">Fish</div>
+      </div>
+      <div class="animal-card" onclick="showPhrase('rabbit')">
+        <img src="/api/placeholder/120/120" alt="Rabbit">
+        <div class="animal-name">Rabbit</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showPhrase(animal) {
+      document.getElementById('phrase').innerText = "I like " + animal + ".";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+    }
+    .activity-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .greeting-card {
+      width: 80%;
+      margin: 15px auto;
+      padding: 15px;
+      border: 3px solid #4a90e2;
+      border-radius: 10px;
+      background-color: #e6f2ff;
+      cursor: pointer;
+      text-align: center;
+    }
+    .english {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    .instruction {
+      font-size: 16px;
+      color: #7f8c8d;
+      font-style: italic;
+    }
+    .step-number {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 50%;
+      line-height: 30px;
+      margin-right: 10px;
+    }
+    .navigation {
+      margin-top: 20px;
+    }
+    .nav-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 10px;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="activity-container">
+    <h1>Let's Learn Greetings!</h1>
+    
+    <div id="greetings-container">
+      <!-- Step 1 -->
+      <div class="greeting-card" id="step1">
+        <div class="step-number">1</div>
+        <div class="english">Hello!</div>
+        <div class="instruction">Wave your hand and say "Hello!"</div>
+      </div>
+      
+      <!-- Step 2 -->
+      <div class="greeting-card" id="step2" style="display: none;">
+        <div class="step-number">2</div>
+        <div class="english">My name is Teacher.</div>
+        <div class="instruction">Point to yourself and say "My name is ___."</div>
+      </div>
+      
+      <!-- Step 3 -->
+      <div class="greeting-card" id="step3" style="display: none;">
+        <div class="step-number">3</div>
+        <div class="english">What is your name?</div>
+        <div class="instruction">Point to the student and use your hands to ask</div>
+      </div>
+      
+      <!-- Step 4 -->
+      <div class="greeting-card" id="step4" style="display: none;">
+        <div class="step-number">4</div>
+        <div class="english">How are you?</div>
+        <div class="instruction">Use questioning face and hands</div>
+      </div>
+      
+      <!-- Step 5 -->
+      <div class="greeting-card" id="step5" style="display: none;">
+        <div class="step-number">5</div>
+        <div class="english">I am good.</div>
+        <div class="instruction">Smile and thumbs up</div>
+      </div>
+      
+      <!-- Step 6 -->
+      <div class="greeting-card" id="step6" style="display: none;">
+        <div class="step-number">6</div>
+        <div class="english">Nice to meet you!</div>
+        <div class="instruction">Smile and pretend to shake hands</div>
+      </div>
+      
+      <!-- Practice All -->
+      <div class="greeting-card" id="practice" style="display: none;">
+        <div class="english">Let's practice all together!</div>
+        <div class="instruction">Try the whole conversation</div>
+      </div>
+    </div>
+    
+    <div class="navigation">
+      <div class="nav-button" id="prev-btn" onclick="prevStep()" style="display: none;">Previous</div>
+      <div class="nav-button" id="next-btn" onclick="nextStep()">Next</div>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 6;
+    
+    function updateButtons() {
+      document.getElementById('prev-btn').style.display = currentStep > 1 ? 'inline-block' : 'none';
+      document.getElementById('next-btn').style.display = currentStep <= totalSteps ? 'inline-block' : 'none';
+    }
+    
+    function showStep(step) {
+      // Hide all steps
+      for (let i = 1; i <= totalSteps; i++) {
+        document.getElementById('step' + i).style.display = 'none';
+      }
+      document.getElementById('practice').style.display = 'none';
+      
+      // Show current step
+      if (step <= totalSteps) {
+        document.getElementById('step' + step).style.display = 'block';
+      } else {
+        document.getElementById('practice').style.display = 'block';
+      }
+      
+      currentStep = step;
+      updateButtons();
+    }
+    
+    function nextStep() {
+      if (currentStep <= totalSteps) {
+        showStep(currentStep + 1);
+      }
+    }
+    
+    function prevStep() {
+      if (currentStep > 1) {
+        showStep(currentStep - 1);
+      }
+    }
+    
+    // Initialize
+    updateButtons();
+  </script>
+</body>
+</html>

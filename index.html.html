@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESL Fun Learning</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f8ff;
+      color: #333;
+    }
+    
+    .header {
+      background-color: #4a90e2;
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .title {
+      font-size: 48px;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .subtitle {
+      font-size: 24px;
+      margin-top: 10px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+    
+    .welcome {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .lessons {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .lesson-card {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .lesson-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    .lesson-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background-color: #4a90e2;
+      border-radius: 15px 15px 0 0;
+    }
+    
+    .lesson-card h3 {
+      margin-top: 15px;
+      color: #2c3e50;
+    }
+    
+    .lesson-icon {
+      font-size: 48px;
+      margin: 10px 0;
+    }
+    
+    .lesson-description {
+      color: #7f8c8d;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: #4a90e2;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #357abd;
+    }
+    
+    .coming-soon {
+      background-color: #ecf0f1;
+      color: #95a5a6;
+      cursor: not-allowed;
+    }
+    
+    .coming-soon:hover {
+      background-color: #ecf0f1;
+    }
+    
+    .footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+    
+    .animals {
+      position: absolute;
+      font-size: 80px;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .dog {
+      top: 100px;
+      left: 5%;
+      transform: rotate(-10deg);
+    }
+    
+    .cat {
+      top: 300px;
+      right: 5%;
+      transform: rotate(10deg);
+    }
+    
+    .bird {
+      bottom: 100px;
+      left: 10%;
+      transform: rotate(-5deg);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+      
+      .lessons {
+        grid-template-columns: 1fr;
+      }
+      
+      .animals {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background decoration -->
+  <div class="animals dog">🐶</div>
+  <div class="animals cat">🐱</div>
+  <div class="animals bird">🐦</div>
+  
+  <!-- Header -->
+  <div class="header">
+    <h1 class="title">ESL Fun Learning</h1>
+    <p class="subtitle">Let's learn English together!</p>
+  </div>
+  
+  <div class="container">
+    <!-- Welcome message -->
+    <div class="welcome">
+      <h2>Welcome to English Class! 👋</h2>
+      <p>Click on a lesson below to start learning English in a fun way!</p>
+    </div>
+    
+    <!-- Lesson cards -->
+    <div class="lessons">
+      <!-- Lesson 1 -->
+      <div class="lesson-card">
+        <div class="lesson-icon">👋</div>
+        <h3>Lesson 1: Hello!</h3>
+        <p class="lesson-description">Learn greetings, colors, numbers, and simple phrases.</p>
+        <a href="lesson1.html" class="btn">Start Learning</a>
+      </div>
+      
+      <!-- Lesson 2 (Coming soon) -->
+      <div class="lesson-card">
+        <div class="lesson-icon">🍎</div>
+        <h3>Lesson 2: Food</h3>
+        <p class="lesson-description">Learn words for different foods and how to say what you like.</p>
+        <a href="#" class="btn coming-soon">Coming Soon</a>
+      </div>
+      
+      <!-- Lesson 3 (Coming soon) -->
+      <div class="lesson-card">
+        <div class="lesson-icon">👕</div>
+        <h3>Lesson 3: Clothes</h3>
+        <p class="lesson-description">Learn words for clothes and colors together.</p>
+        <a href="#" class="btn coming-soon">Coming Soon</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <div class="footer">
+    <p>ESL Fun Learning - 2025</p>
+  </div>
+</body>
+</html>
