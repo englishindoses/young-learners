@@ -199,7 +199,7 @@
     </div>
     
     <div class="info-panel">
-      <div class="timer" id="timer">Time: 60</div>
+      <div class="timer" id="timer">Time: 90</div>
       <div class="moves" id="moves">Moves: 0</div>
     </div>
     
@@ -243,7 +243,7 @@ let flippedCards = [];
 let matchedPairs = 0;
 let moves = 0;
 let gameTimer;
-let timeLeft = 60;
+let timeLeft = 90;
 let gameStarted = false;
 let canFlip = false;
 
@@ -268,11 +268,11 @@ function initializeGame() {
   flippedCards = [];
   matchedPairs = 0;
   moves = 0;
-  timeLeft = 60;
+  timeLeft = 90;
   memoryBoard.innerHTML = '';
   messageDisplay.style.display = 'none';
   movesDisplay.textContent = 'Moves: 0';
-  timerDisplay.textContent = 'Time: 60';
+  timerDisplay.textContent = 'Time: 90';
   timerDisplay.style.color = '#ff5555'; // Reset timer color
   
   // Create a copy of each card to make pairs
