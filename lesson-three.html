@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3: I Like Animals</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page {
+            display: none;
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        h1 {
+            color: #4a90e2;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #e67e22;
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .review-box {
+            background-color: #e8f4fd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .animal-box {
+            display: inline-block;
+            width: 130px;
+            text-align: center;
+            margin: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        
+        .animal-box:hover {
+            transform: scale(1.05);
+        }
+        
+        .animal-emoji {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        
+        .animal-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .question-box {
+            background-color: #fff3e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .practice-conversation {
+            background-color: #e0f7fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .person {
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        
+        .gap-fill {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .gap-input {
+            border: 2px solid #4a90e2;
+            border-radius: 5px;
+            padding: 5px;
+            width: 100px;
+            font-family: inherit;
+            font-size: 16px;
+        }
+        
+        .writing-task {
+            background-color: #f3e5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .writing-area {
+            width: 100%;
+            min-height: 80px;
+            border: 2px solid #9c27b0;
+            border-radius: 10px;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 16px;
+            resize: vertical;
+        }
+        
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            height: 100px;
+            background-color: #4a90e2;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+            background-color: white;
+            font-size: 36px;
+            border: 2px solid #4a90e2;
+        }
+        
+        .card.matched {
+            background-color: #a5d6a7;
+            transform: rotateY(180deg);
+            cursor: default;
+        }
+        
+        .text-card {
+            font-size: 0;
+        }
+        
+        .text-card.flipped {
+            font-size: 20px;
+        }
+        
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e74c3c;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: inherit;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #357abd;
+        }
+        
+        .btn.fun {
+            background-color: #e74c3c;
+        }
+        
+        .btn.fun:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn.home {
+            background-color: #2ecc71;
+        }
+        
+        .btn.home:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .sentence-builder {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .word-block {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .sentence-area {
+            min-height: 50px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .sentence-block {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page 1: Review -->
+        <div class="page active" id="page1">
+            <h1>Lesson 3: I Like Animals</h1>
+            
+            <div class="review-box">
+                <h2>Quick Review</h2>
+                <p><b>Hello!</b> 👋 Remember these words?</p>
+                
+                <p>
+                    <b>"Hello, my name is..."</b> 👋 <br>
+                    <b>"What's your name?"</b> ❓<br>
+                    <b>"Nice to meet you!"</b> 😊
+                </p>
+                
+                <p><b>Colors</b> 🎨</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <span style="background-color: red; color: white; padding: 5px 10px; border-radius: 5px;">red</span>
+                    <span style="background-color: blue; color: white; padding: 5px 10px; border-radius: 5px;">blue</span>
+                    <span style="background-color: green; color: white; padding: 5px 10px; border-radius: 5px;">green</span>
+                    <span style="background-color: yellow; color: black; padding: 5px 10px; border-radius: 5px;">yellow</span>
+                    <span style="background-color: orange; color: white; padding: 5px 10px; border-radius: 5px;">orange</span>
+                </div>
+                
+                <p><b>Numbers</b> 🔢</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <span style="background-color: #f1c40f; color: black; padding: 5px 10px; border-radius: 5px;">1 - one</span>
+                    <span style="background-color: #f1c40f; color: black; padding: 5px 10px; border-radius: 5px;">2 - two</span>
+                    <span style="background-color: #f1c40f; color: black; padding: 5px 10px; border-radius: 5px;">3 - three</span>
+                    <span style="background-color: #f1c40f; color: black; padding: 5px 10px; border-radius: 5px;">4 - four</span>
+                    <span style="background-color: #f1c40f; color: black; padding: 5px 10px; border-radius: 5px;">5 - five</span>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn home" onclick="window.location.href='index.html'">Home</button>
+                <button class="btn" onclick="showPage(2)">Next →</button>
+            </div>
+        </div>
+        
+        <!-- Page 2: New Language -->
+        <div class="page" id="page2">
+            <h1>New Words: Animals</h1>
+            
+            <div style="text-align: center;">
+                <div class="animal-box">
+                    <div class="animal-emoji">🐱</div>
+                    <div class="animal-name">cat</div>
+                </div>
+                
+                <div class="animal-box">
+                    <div class="animal-emoji">🐶</div>
+                    <div class="animal-name">dog</div>
+                </div>
+                
+                <div class="animal-box">
+                    <div class="animal-emoji">🐰</div>
+                    <div class="animal-name">rabbit</div>
+                </div>
+                
+                <div class="animal-box">
+                    <div class="animal-emoji">🐦</div>
+                    <div class="animal-name">bird</div>
+                </div>
+                
+                <div class="animal-box">
+                    <div class="animal-emoji">🐢</div>
+                    <div class="animal-name">turtle</div>
+                </div>
+                
+                <div class="animal-box">
+                    <div class="animal-emoji">🐟</div>
+                    <div class="animal-name">fish</div>
+                </div>
+            </div>
+            
+            <h2>New Phrases</h2>
+            
+            <p><b>"I like..."</b> - when you enjoy something 😊</p>
+            <p><b>"I don't like..."</b> - when you don't enjoy something 😕</p>
+            <p><b>"Do you like...?"</b> - asking if someone enjoys something ❓</p>
+            <p><b>"Yes, I like..."</b> - saying you enjoy something 👍</p>
+            <p><b>"No, I don't like..."</b> - saying you don't enjoy something 👎</p>
+            
+            <div class="question-box">
+                <h3>Check Understanding</h3>
+                <p>1. Look at the animals. Which one can swim? 🏊‍♂️</p>
+                <p>2. Which animal has fur and says "woof"? 🔊</p>
+                <p>3. Point to an animal you like. Can you say "I like [animal]"?</p>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn" onclick="showPage(1)">← Back</button>
+                <button class="btn" onclick="showPage(3)">Next →</button>
+            </div>
+        </div>
+        
+        <!-- Page 3: Practice -->
+        <div class="page" id="page3">
+            <h1>Practice Time</h1>
+            
+            <div class="gap-fill">
+                <h3>Fill in the gaps</h3>
+                <p>1. I <input type="text" class="gap-input" data-answer="like"> dogs. 🐶</p>
+                <p>2. I don't <input type="text" class="gap-input" data-answer="like"> spiders. 🕷️</p>
+                <p>3. <input type="text" class="gap-input" data-answer="Do"> you like fish? 🐟</p>
+                <p>4. Yes, I <input type="text" class="gap-input" data-answer="like"> rabbits. 🐰</p>
+                <button class="btn" onclick="checkGapFill()" style="margin-top: 10px;">Check</button>
+            </div>
+            
+            <div class="practice-conversation">
+                <h3>Mini Conversation</h3>
+                <p><span class="person">Teacher:</span> Hello! Do you like animals?</p>
+                <p><span class="person">You:</span> <input type="text" class="gap-input" style="width: 200px;" placeholder="Your answer..."></p>
+                <p><span class="person">Teacher:</span> What animal do you like?</p>
+                <p><span class="person">You:</span> <input type="text" class="gap-input" style="width: 200px;" placeholder="I like..."></p>
+                <p><span class="person">Teacher:</span> Do you like turtles?</p>
+                <p><span class="person">You:</span> <input type="text" class="gap-input" style="width: 200px;" placeholder="Yes, I like.../No, I don't like..."></p>
+            </div>
+            
+            <h3>Make a Sentence</h3>
+            <p>Click the words to make a sentence:</p>
+            <div class="sentence-builder">
+                <div class="word-block" onclick="addToSentence(this)">I</div>
+                <div class="word-block" onclick="addToSentence(this)">like</div>
+                <div class="word-block" onclick="addToSentence(this)">don't</div>
+                <div class="word-block" onclick="addToSentence(this)">Do</div>
+                <div class="word-block" onclick="addToSentence(this)">you</div>
+                <div class="word-block" onclick="addToSentence(this)">cats</div>
+                <div class="word-block" onclick="addToSentence(this)">dogs</div>
+                <div class="word-block" onclick="addToSentence(this)">birds</div>
+                <div class="word-block" onclick="addToSentence(this)">?</div>
+                <div class="word-block" onclick="addToSentence(this)">.</div>
+            </div>
+            <div class="sentence-area" id="sentenceArea"></div>
+            <button class="btn" onclick="clearSentence()" style="margin-top: 10px;">Clear</button>
+            
+            <div class="nav-buttons">
+                <button class="btn" onclick="showPage(2)">← Back</button>
+                <button class="btn" onclick="showPage(4)">Next →</button>
+            </div>
+        </div>
+        
+        <!-- Page 4: Writing Task -->
+        <div class="page" id="page4">
+            <h1>Writing Practice</h1>
+            
+            <div class="writing-task">
+                <h3>Spelling Practice</h3>
+                <p>Look at the picture and spell the word:</p>
+                <div style="font-size: 60px; text-align: center;">🐱</div>
+                <input type="text" class="gap-input" style="width: 100%;" data-answer="cat">
+                
+                <div style="font-size: 60px; text-align: center; margin-top: 20px;">🐶</div>
+                <input type="text" class="gap-input" style="width: 100%;" data-answer="dog">
+                
+                <button class="btn" onclick="checkSpelling()" style="margin-top: 10px;">Check Spelling</button>
+            </div>
+            
+            <div class="writing-task">
+                <h3>Write a Sentence</h3>
+                <p>Write one sentence about an animal you like:</p>
+                <textarea class="writing-area" placeholder="I like..."></textarea>
+                
+                <p style="margin-top: 20px;">Write one sentence about an animal you don't like:</p>
+                <textarea class="writing-area" placeholder="I don't like..."></textarea>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn" onclick="showPage(3)">← Back</button>
+                <button class="btn" onclick="showPage(5)">Next →</button>
+            </div>
+        </div>
+        
+        <!-- Page 5: Revision Game -->
+        <div class="page" id="page5">
+            <h1>Revision Game</h1>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2>Animal Quiz</h2>
+                <p>Click on the correct animal!</p>
+                
+                <div id="quizContainer">
+                    <div id="quizQuestion" style="font-size: 24px; margin-bottom: 20px;">Which one is a dog?</div>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+                        <div class="animal-box" onclick="checkQuizAnswer('cat', this)">
+                            <div class="animal-emoji">🐱</div>
+                            <div class="animal-name">cat</div>
+                        </div>
+                        
+                        <div class="animal-box" onclick="checkQuizAnswer('dog', this)">
+                            <div class="animal-emoji">🐶</div>
+                            <div class="animal-name">dog</div>
+                        </div>
+                        
+                        <div class="animal-box" onclick="checkQuizAnswer('rabbit', this)">
+                            <div class="animal-emoji">🐰</div>
+                            <div class="animal-name">rabbit</div>
+                        </div>
+                        
+                        <div class="animal-box" onclick="checkQuizAnswer('bird', this)">
+                            <div class="animal-emoji">🐦</div>
+                            <div class="animal-name">bird</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="quizResult" style="margin-top: 20px; font-weight: bold; height: 24px;"></div>
+                
+                <button class="btn" onclick="nextQuizQuestion()" style="margin-top: 20px;">Next Question</button>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn" onclick="showPage(4)">← Back</button>
+                <button class="btn home" onclick="window.location.href='index.html'">Home</button>
+                <button class="btn fun" onclick="showPage(6)">Extra Fun! 🎮</button>
+            </div>
+        </div>
+        
+        <!-- Page 6: Memory Game -->
+        <div class="page" id="page6">
+            <h1>Memory Game</h1>
+            
+            <p style="text-align: center;">Match the animal with the word! You have 90 seconds.</p>
+            
+            <div class="timer" id="timer">90</div>
+            
+            <div class="memory-game" id="memoryGame">
+                <!-- Cards will be generated by JavaScript -->
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn" onclick="showPage(5)">← Back</button>
+                <button class="btn" id="restartGameBtn" onclick="startMemoryGame()">Restart Game</button>
+                <button class="btn home" onclick="window.location.href='index.html'">Home</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Page navigation
+        function showPage(pageNum) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById('page' + pageNum).classList.add('active');
+            
+            // Initialize memory game when page 6 is shown
+            if (pageNum === 6) {
+                startMemoryGame();
+            }
+            
+            // Reset quiz when page 5 is shown
+            if (pageNum === 5) {
+                currentQuizQuestion = 0;
+                nextQuizQuestion();
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Gap fill checking
+        function checkGapFill() {
+            const inputs = document.querySelectorAll('.gap-fill .gap-input');
+            inputs.forEach(input => {
+                if (input.value.trim().toLowerCase() === input.dataset.answer.toLowerCase()) {
+                    input.style.backgroundColor = '#a5d6a7';
+                } else {
+                    input.style.backgroundColor = '#ef9a9a';
+                }
+            });
+        }
+        
+        // Spelling check
+        function checkSpelling() {
+            const inputs = document.querySelectorAll('.writing-task .gap-input');
+            inputs.forEach(input => {
+                if (input.value.trim().toLowerCase() === input.dataset.answer.toLowerCase()) {
+                    input.style.backgroundColor = '#a5d6a7';
+                } else {
+                    input.style.backgroundColor = '#ef9a9a';
+                }
+            });
+        }
+        
+        // Sentence builder
+        function addToSentence(wordElem) {
+            const word = wordElem.textContent;
+            const sentenceArea = document.getElementById('sentenceArea');
+            
+            const wordBlock = document.createElement('div');
+            wordBlock.className = 'sentence-block';
+            wordBlock.textContent = word;
+            wordBlock.onclick = function() {
+                this.remove();
+            };
+            
+            sentenceArea.appendChild(wordBlock);
+        }
+        
+        function clearSentence() {
+            document.getElementById('sentenceArea').innerHTML = '';
+        }
+        
+        // Quiz functionality
+        const quizQuestions = [
+            { question: "Which one is a dog?", answer: "dog" },
+            { question: "Which one is a cat?", answer: "cat" },
+            { question: "Which one is a bird?", answer: "bird" },
+            { question: "Which one is a rabbit?", answer: "rabbit" }
+        ];
+        
+        let currentQuizQuestion = 0;
+        
+        function nextQuizQuestion() {
+            if (currentQuizQuestion >= quizQuestions.length) {
+                currentQuizQuestion = 0;
+            }
+            
+            const quizQuestion = quizQuestions[currentQuizQuestion];
+            document.getElementById('quizQuestion').textContent = quizQuestion.question;
+            document.getElementById('quizResult').textContent = '';
+            document.getElementById('quizResult').style.color = '';
+            
+            // Reset all animal boxes
+            const animalBoxes = document.querySelectorAll('#quizContainer .animal-box');
+            animalBoxes.forEach(box => {
+                box.style.backgroundColor = '#f8f9fa';
+                box.style.transform = 'scale(1)';
+            });
+            
+            currentQuizQuestion++;
+        }
+        
+        function checkQuizAnswer(animal, elem) {
+            const answer = quizQuestions[(currentQuizQuestion - 1) % quizQuestions.length].answer;
+            const resultElem = document.getElementById('quizResult');
+            
+            if (animal === answer) {
+                resultElem.textContent = "Correct! 👍";
+                resultElem.style.color = 'green';
+                elem.style.backgroundColor = '#a5d6a7';
+                elem.style.transform = 'scale(1.1)';
+            } else {
+                resultElem.textContent = "Try again! 👎";
+                resultElem.style.color = 'red';
+                elem.style.backgroundColor = '#ef9a9a';
+            }
+        }
+        
+        // Memory game
+        const memoryItems = [
+            { emoji: '🐱', text: 'cat' },
+            { emoji: '🐶', text: 'dog' },
+            { emoji: '🐰', text: 'rabbit' },
+            { emoji: '🐦', text: 'bird' },
+            { emoji: '🐢', text: 'turtle' },
+            { emoji: '🐟', text: 'fish' }
+        ];
+        
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let timerInterval;
+        let timeLeft = 90;
+        
+        function startMemoryGame() {
+            // Reset game state
+            const gameContainer = document.getElementById('memoryGame');
+            gameContainer.innerHTML = '';
+            flippedCards = [];
+            matchedPairs = 0;
+            timeLeft = 90;
+            document.getElementById('timer').textContent = timeLeft;
+            clearInterval(timerInterval);
+            
+            // Create card pairs (emoji + text)
+            memoryCards = [];
+            memoryItems.forEach(item => {
+                memoryCards.push({ 
+                    id: memoryCards.length, 
+                    content: item.emoji, 
+                    type: 'emoji',
+                    match: item.text 
+                });
+                memoryCards.push({ 
+                    id: memoryCards.length, 
+                    content: item.text, 
+                    type: 'text',
+                    match: item.emoji 
+                });
+            });
+            
+            // Shuffle cards
+            memoryCards.sort(() => Math.random() - 0.5);
+            
+            // Create card elements
+            memoryCards.forEach(card => {
+                const cardElem = document.createElement('div');
+                cardElem.className = 'card';
+                if (card.type === 'text') {
+                    cardElem.classList.add('text-card');
+                }
+                cardElem.dataset.id = card.id;
+                cardElem.textContent = card.content;
+                cardElem.onclick = function() {
+                    flipCard(this);
+                };
+                gameContainer.appendChild(cardElem);
+            });
+            
+            // Start timer
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+        
+        function updateTimer() {
+            timeLeft--;
+            document.getElementById('timer').textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up! You found " + matchedPairs + " pairs.");
+                
+                // Reveal all cards
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.add('flipped');
+                });
+                
+                document.getElementById('restartGameBtn').textContent = "Play Again";
+            }
+        }
+        
+        function flipCard(cardElem) {
+            // Can't flip more than 2 cards at once
+            if (flippedCards.length === 2) return;
+            
+            // Can't flip already matched or already flipped cards
+            if (cardElem.classList.contains('matched') || cardElem.classList.contains('flipped')) return;
+            
+            // Flip the card
+            cardElem.classList.add('flipped');
+            flippedCards.push(cardElem);
+            
+            // If we have 2 flipped cards, check for a match
+            if (flippedCards.length === 2) {
+                setTimeout(checkForMatch, 1000);
+            }
+        }
+        
+        function checkForMatch() {
+            const card1 = flippedCards[0];
+            const card2 = flippedCards[1];
+            
+            const card1Data = memoryCards.find(card => card.id == card1.dataset.id);
+            const card2Data = memoryCards.find(card => card.id == card2.dataset.id);
+            
+            if ((card1Data.content === card2Data.match) || (card2Data.content === card1Data.match)) {
+                // Match found
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                
+                // Check if all pairs are found
+                if (matchedPairs === memoryItems.length) {
+                    clearInterval(timerInterval);
+                    setTimeout(() => {
+                        alert("Congratulations! You found all pairs with " + timeLeft + " seconds left!");
+                    }, 500);
+                }
+            } else {
+                // No match
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+            }
+            
+            flippedCards = [];
+        }
+        
+        // Initialize the first page
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage(1);
+        });
+    </script>
+</body>
+</html>
