@@ -13,6 +13,23 @@
             color: #333;
         }
         
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #4caf50;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+        
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -262,6 +279,11 @@
 </head>
 <body>
     <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar" style="width: 16.6%;"></div>
+        </div>
+        
         <!-- Page 1: Review -->
         <div class="page active" id="page1">
             <h1>Lesson 3: I Like Animals</h1>
@@ -339,17 +361,17 @@
             
             <h2>New Phrases</h2>
             
-            <p><b>"I like..."</b> - when you enjoy something 😊</p>
-            <p><b>"I don't like..."</b> - when you don't enjoy something 😕</p>
-            <p><b>"Do you like...?"</b> - asking if someone enjoys something ❓</p>
-            <p><b>"Yes, I like..."</b> - saying you enjoy something 👍</p>
-            <p><b>"No, I don't like..."</b> - saying you don't enjoy something 👎</p>
+            <p><b>"I like..."</b> - when you enjoy something 😊 <br><span style="color: #7b68ee;">(Portuguese: "Eu gosto de...")</span></p>
+            <p><b>"I don't like..."</b> - when you don't enjoy something 😕 <br><span style="color: #7b68ee;">(Portuguese: "Eu não gosto de...")</span></p>
+            <p><b>"Do you like...?"</b> - asking if someone enjoys something ❓ <br><span style="color: #7b68ee;">(Portuguese: "Você gosta de...?")</span></p>
+            <p><b>"Yes, I like..."</b> - saying you enjoy something 👍 <br><span style="color: #7b68ee;">(Portuguese: "Sim, eu gosto de...")</span></p>
+            <p><b>"No, I don't like..."</b> - saying you don't enjoy something 👎 <br><span style="color: #7b68ee;">(Portuguese: "Não, eu não gosto de...")</span></p>
             
             <div class="question-box">
                 <h3>Check Understanding</h3>
-                <p>1. Look at the animals. Which one can swim? 🏊‍♂️</p>
-                <p>2. Which animal has fur and says "woof"? 🔊</p>
-                <p>3. Point to an animal you like. Can you say "I like [animal]"?</p>
+                <p>1. Touch the fish. 🐟</p>
+                <p>2. Touch the dog. 🐶</p>
+                <p>3. Which animal do you like? Say: "I like..." 😊</p>
             </div>
             
             <div class="nav-buttons">
@@ -449,22 +471,18 @@
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
                         <div class="animal-box" onclick="checkQuizAnswer('cat', this)">
                             <div class="animal-emoji">🐱</div>
-                            <div class="animal-name">cat</div>
                         </div>
                         
                         <div class="animal-box" onclick="checkQuizAnswer('dog', this)">
                             <div class="animal-emoji">🐶</div>
-                            <div class="animal-name">dog</div>
                         </div>
                         
                         <div class="animal-box" onclick="checkQuizAnswer('rabbit', this)">
                             <div class="animal-emoji">🐰</div>
-                            <div class="animal-name">rabbit</div>
                         </div>
                         
                         <div class="animal-box" onclick="checkQuizAnswer('bird', this)">
                             <div class="animal-emoji">🐦</div>
-                            <div class="animal-name">bird</div>
                         </div>
                     </div>
                 </div>
@@ -509,6 +527,11 @@
                 page.classList.remove('active');
             });
             document.getElementById('page' + pageNum).classList.add('active');
+            
+            // Update progress bar
+            const totalPages = 6;
+            const progressPercent = (pageNum / totalPages) * 100;
+            document.getElementById('progressBar').style.width = progressPercent + '%';
             
             // Initialize memory game when page 6 is shown
             if (pageNum === 6) {
@@ -720,7 +743,9 @@
             const card1Data = memoryCards.find(card => card.id == card1.dataset.id);
             const card2Data = memoryCards.find(card => card.id == card2.dataset.id);
             
-            if ((card1Data.content === card2Data.match) || (card2Data.content === card1Data.match)) {
+            // Fix for text display in memory game
+            if ((card1Data.type === 'emoji' && card2Data.type === 'text' && card1Data.match === card2Data.content) ||
+                (card1Data.type === 'text' && card2Data.type === 'emoji' && card1Data.content === card2Data.match)) {
                 // Match found
                 card1.classList.add('matched');
                 card2.classList.add('matched');
