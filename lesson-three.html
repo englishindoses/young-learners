@@ -164,30 +164,67 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 0;
-            transition: all 0.3s;
+            transition: transform 0.3s;
             transform-style: preserve-3d;
+            position: relative;
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+        
+        .card-front {
+            background-color: #4a90e2;
+            transform: rotateY(0deg);
+        }
+        
+        .card-back {
+            background-color: white;
+            transform: rotateY(180deg);
+            border: 2px solid #4a90e2;
         }
         
         .card.flipped {
             transform: rotateY(180deg);
-            background-color: white;
-            font-size: 36px;
-            border: 2px solid #4a90e2;
         }
         
-        .card.matched {
+        .card.matched .card-back {
             background-color: #a5d6a7;
-            transform: rotateY(180deg);
-            cursor: default;
         }
         
-        .text-card {
-            font-size: 0;
-        }
-        
-        .text-card.flipped {
+        .card-text {
             font-size: 20px;
+        }
+        
+        .card-emoji {
+            font-size: 36px;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f;
+            animation: fall 3s linear forwards;
+            z-index: 1000;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
         
         .timer {
@@ -644,7 +681,9 @@
             { emoji: '🐰', text: 'rabbit' },
             { emoji: '🐦', text: 'bird' },
             { emoji: '🐢', text: 'turtle' },
-            { emoji: '🐟', text: 'fish' }
+            { emoji: '🐟', text: 'fish' },
+            { emoji: '🐘', text: 'elephant' },
+            { emoji: '🐒', text: 'monkey' }
         ];
         
         let memoryCards = [];
@@ -687,14 +726,31 @@
             memoryCards.forEach(card => {
                 const cardElem = document.createElement('div');
                 cardElem.className = 'card';
-                if (card.type === 'text') {
-                    cardElem.classList.add('text-card');
-                }
                 cardElem.dataset.id = card.id;
-                cardElem.textContent = card.content;
+                
+                // Create front of card (blue back)
+                const cardFront = document.createElement('div');
+                cardFront.className = 'card-front';
+                cardFront.textContent = '?';
+                
+                // Create back of card (content)
+                const cardBack = document.createElement('div');
+                cardBack.className = 'card-back';
+                if (card.type === 'text') {
+                    cardBack.className += ' card-text';
+                } else {
+                    cardBack.className += ' card-emoji';
+                }
+                cardBack.textContent = card.content;
+                
+                // Add front and back to card
+                cardElem.appendChild(cardFront);
+                cardElem.appendChild(cardBack);
+                
                 cardElem.onclick = function() {
                     flipCard(this);
                 };
+                
                 gameContainer.appendChild(cardElem);
             });
             
@@ -743,7 +799,7 @@
             const card1Data = memoryCards.find(card => card.id == card1.dataset.id);
             const card2Data = memoryCards.find(card => card.id == card2.dataset.id);
             
-            // Fix for text display in memory game
+            // Check for match between emoji and text
             if ((card1Data.type === 'emoji' && card2Data.type === 'text' && card1Data.match === card2Data.content) ||
                 (card1Data.type === 'text' && card2Data.type === 'emoji' && card1Data.content === card2Data.match)) {
                 // Match found
@@ -755,7 +811,7 @@
                 if (matchedPairs === memoryItems.length) {
                     clearInterval(timerInterval);
                     setTimeout(() => {
-                        alert("Congratulations! You found all pairs with " + timeLeft + " seconds left!");
+                        celebrateSuccess();
                     }, 500);
                 }
             } else {
@@ -765,6 +821,57 @@
             }
             
             flippedCards = [];
+        }
+        
+        function celebrateSuccess() {
+            // Create confetti
+            for (let i = 0; i < 100; i++) {
+                createConfetti();
+            }
+            
+            // Show congratulations message
+            const gameContainer = document.getElementById('memoryGame');
+            const celebration = document.createElement('div');
+            celebration.style.position = 'absolute';
+            celebration.style.top = '50%';
+            celebration.style.left = '50%';
+            celebration.style.transform = 'translate(-50%, -50%)';
+            celebration.style.fontSize = '30px';
+            celebration.style.fontWeight = 'bold';
+            celebration.style.color = '#4a90e2';
+            celebration.style.textAlign = 'center';
+            celebration.style.zIndex = '100';
+            celebration.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            celebration.style.padding = '20px';
+            celebration.style.borderRadius = '10px';
+            celebration.style.boxShadow = '0 0 20px rgba(0,0,0,0.2)';
+            celebration.innerHTML = 'Great job! 🎉<br>You found all the pairs!<br>Time left: ' + timeLeft + ' seconds';
+            
+            // Parent must be positioned for absolute positioning to work
+            gameContainer.style.position = 'relative';
+            gameContainer.appendChild(celebration);
+            
+            // Make the message disappear after 5 seconds
+            setTimeout(() => {
+                celebration.style.display = 'none';
+            }, 5000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = Math.random() * 10 + 5 + 'px';
+            confetti.style.height = Math.random() * 10 + 5 + 'px';
+            confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+            document.body.appendChild(confetti);
+            
+            // Remove confetti after animation ends
+            setTimeout(() => {
+                confetti.remove();
+            }, 4000);
         }
         
         // Initialize the first page
